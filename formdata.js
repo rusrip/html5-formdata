@@ -36,7 +36,7 @@
     }
 	
 	FormData.prototype.get = function(key) {
-		var result;
+		var result = null;
 		for(var i = 0, len = this._fields.length; i < len; i++) {
 			if(this._fields[i][0] === key ) {
 				result = this._fields.[i][1];
@@ -57,6 +57,19 @@
 		
 		return result;
 	}
+	
+	FormData.prototype.delete = function(key) {
+		var new_fields = [];
+		for(var i = 0, len = this._fields.length; i < len; i++) {
+			if(this._fields[i][0] !== key ) {
+				new_fields.push(this._fields[i][0], this._fields.[i][1]);				
+			}
+		}
+		
+		this._fields = new_fields;
+	}
+	
+	
 	
     w.FormData = FormData;
 })(window);

@@ -2,6 +2,7 @@
  * Emulate FormData for some browsers
  * MIT License
  * (c) 2010 François de Metz
+ * (c) 2016 Vladimir Kuzmin
  */
 (function(w) {
     if (w.FormData)
@@ -33,5 +34,29 @@
         body += "--" + boundary +"--";
         return body;
     }
+	
+	FormData.prototype.get = function(key) {
+		var result;
+		for(var i = 0, len = this._fields.length; i < len; i++) {
+			if(this._fields[i][0] === key ) {
+				result = this._fields.[i][1];
+				break;
+			}
+		}
+		
+		return result;
+	}
+	
+	FormData.prototype.getAll = function(key) {
+		var result = [];
+		for(var i = 0, len = this._fields.length; i < len; i++) {
+			if(this._fields[i][0] === key ) {
+				result.push(this._fields.[i][1]);				
+			}
+		}
+		
+		return result;
+	}
+	
     w.FormData = FormData;
 })(window);
